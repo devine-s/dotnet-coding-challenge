@@ -21,16 +21,24 @@ namespace CMS.challenge.api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync()
+        public async Task<IActionResult> CreateUserAsync([FromBody] User user)
         {
-            var user = new User
+
+            /*if (user.Id.ToString() == "") {
+                user.Id = Guid.NewGuid();
+            }
+            else
             {
-                DateOfBirth = DateTime.Now.AddYears(-10),
-                Email = "",
-                FirstName = "",
-                LastName = "",
-                Id = Guid.NewGuid()
-            };
+                var test = _simpleObjectCache.GetAsync(user.Id);
+                if (!test.Equals(null)) return BadRequest();
+            }*/
+
+            var test = _simpleObjectCache.GetAsync(user.Id);
+            //test.
+            //if (test.ToString != "") 
+            //if (!test.Equals(null)) return BadRequest();
+
+            user.Id = Guid.NewGuid();
 
             await _simpleObjectCache.AddAsync(user.Id, user);
 
