@@ -1,6 +1,7 @@
 ﻿using CMS.challenge.data.Cache;
 using CMS.challenge.data.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -23,22 +24,17 @@ namespace CMS.challenge.api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] User user)
         {
+            var existingRecord = _simpleObjectCache.GetAsync(user.Id);
+            if (existingRecord.Result != null)
+            {
+                JObject response = JObject.Parse("{ \"ErrorMessage\": \"User already exists\"}");
+                return BadRequest(response);
+            }
 
-            /*if (user.Id.ToString() == "") {
+            if (user.Id.ToString() == "00000000-0000-0000-0000-000000000000")
+            {
                 user.Id = Guid.NewGuid();
             }
-            else
-            {
-                var test = _simpleObjectCache.GetAsync(user.Id);
-                if (!test.Equals(null)) return BadRequest();
-            }*/
-
-            var test = _simpleObjectCache.GetAsync(user.Id);
-            //test.
-            //if (test.ToString != "") 
-            //if (!test.Equals(null)) return BadRequest();
-
-            user.Id = Guid.NewGuid();
 
             await _simpleObjectCache.AddAsync(user.Id, user);
 
