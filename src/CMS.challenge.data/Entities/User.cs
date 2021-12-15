@@ -23,6 +23,19 @@ namespace CMS.challenge.data.Entities
         /// <summary>
         /// User's D.O.B.
         /// </summary>
-        public DateTime DateOfBirth { get; set; }
+        private DateTime dateOfBirth;
+        public DateTime DateOfBirth {
+            get
+            {
+                return dateOfBirth;
+            }
+            set
+            {
+                dateOfBirth = value;
+                Age = new DateTime(DateTime.Now.Subtract(dateOfBirth).Ticks).Year - 1;
+            }
+        }
+
+        public int Age { get; set; }
     }
 }

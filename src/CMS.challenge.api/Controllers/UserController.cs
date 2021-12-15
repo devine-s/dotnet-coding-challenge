@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CMS.challenge.api.Controllers
 {
@@ -31,40 +32,10 @@ namespace CMS.challenge.api.Controllers
                 user.Id = Guid.NewGuid();
             }
 
-            if (ValidationClass.UserExists(user.Id, _simpleObjectCache))
+            List<Error> errorList = ValidationClass.ValidInput(user, _simpleObjectCache, false);
+            if (errorList.Count != 0)
             {
-                JObject response = JObject.Parse("{ \"ErrorMessage\": \"User already exists\"}");
-                return BadRequest(response);
-            }
-
-            if (ValidationClass.EmailExists(user.Email, _simpleObjectCache))
-            {
-                JObject response = JObject.Parse("{ \"ErrorMessage\": \"Email address already used\"}");
-                return BadRequest(response);
-            }
-
-            if (!ValidationClass.IsValidFirstName(user.FirstName))
-            {
-                JObject response = JObject.Parse("{ \"ErrorMessage\": \"First name is greater than 128 characters\"}");
-                return BadRequest(response);
-            }
-
-            if (!ValidationClass.IsValidLastName(user.LastName))
-            {
-                JObject response = JObject.Parse("{ \"ErrorMessage\": \"Last name is greater than 128 characters\"}");
-                return BadRequest(response);
-            }
-
-            if (!ValidationClass.IsValidEmail(user.Email))
-            {
-                JObject response = JObject.Parse("{ \"ErrorMessage\": \"Email isn't valid\"}");
-                return BadRequest(response);
-            }
-
-            if (!ValidationClass.IsValidDateOfBirth(user.DateOfBirth))
-            {
-                JObject response = JObject.Parse("{ \"ErrorMessage\": \"Date of birth isn't valid\"}");
-                return BadRequest(response);
+                return BadRequest(new { errorList });
             }
 
             await _simpleObjectCache.AddAsync(user.Id, user);
@@ -80,21 +51,45 @@ namespace CMS.challenge.api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetUser()
+        public async Task<IActionResult> GetUserAsync(Guid id)
         {
-            return Ok();
+            var record = await _simpleObjectCache.GetAsync(id);
+
+            if (record == null)
+            {
+                return NotFound(record);
+            }
+            
+            return Ok(record);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteUser()
+        public async Task<IActionResult> DeleteUserAsync(Guid id)
         {
+            var record = await _simpleObjectCache.GetAsync(id);
+
+            if (record == null)
+            {
+                return NotFound(record);
+            }
+
+            await _simpleObjectCache.DeleteAsync(id);
+
             return Ok();
         }
 
         [HttpPut]
-        public IActionResult PutUser()
+        public async Task<IActionResult> PutUserAsync([FromBody] User user)
         {
+            List<Error> errorList = ValidationClass.ValidInput(user, _simpleObjectCache, true);
+            if (errorList.Count != 0)
+            {
+                return BadRequest(new { errorList });
+            }
+
+            await _simpleObjectCache.UpdateAsync(user.Id, user);
+
             return Ok();
         }
     }

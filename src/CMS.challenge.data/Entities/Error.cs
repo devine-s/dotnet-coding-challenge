@@ -6,6 +6,7 @@ namespace CMS.challenge.data.Entities
 {
     public class Error
     {
+        public string field { get; set; }
         public string message { get; set; }
     }
 }
