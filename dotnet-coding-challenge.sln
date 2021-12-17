@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.challenge.api", "src\CM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.challenge.data", "src\CMS.challenge.data\CMS.challenge.data.csproj", "{5933EED9-8551-43F5-9B1A-9C548DDBD9D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.challenge.common", "src\CMS.challenge.common\CMS.challenge.common.csproj", "{70A096BE-AF2B-4CEA-90CB-7A3B0F6899F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.challenge.common", "src\CMS.challenge.common\CMS.challenge.common.csproj", "{70A096BE-AF2B-4CEA-90CB-7A3B0F6899F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.challenge.commonTests", "src\CMS.challenge.commonTests\CMS.challenge.commonTests.csproj", "{83874C4D-46BE-4040-8543-C2A9B7556E31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{70A096BE-AF2B-4CEA-90CB-7A3B0F6899F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70A096BE-AF2B-4CEA-90CB-7A3B0F6899F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70A096BE-AF2B-4CEA-90CB-7A3B0F6899F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83874C4D-46BE-4040-8543-C2A9B7556E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83874C4D-46BE-4040-8543-C2A9B7556E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83874C4D-46BE-4040-8543-C2A9B7556E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83874C4D-46BE-4040-8543-C2A9B7556E31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

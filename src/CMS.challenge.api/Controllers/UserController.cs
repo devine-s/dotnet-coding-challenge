@@ -80,8 +80,10 @@ namespace CMS.challenge.api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutUserAsync([FromBody] User user)
+        [Route("{id}")]
+        public async Task<IActionResult> PutUserAsync(Guid id, [FromBody] User user)
         {
+            user.Id = id;
             List<Error> errorList = ValidationClass.ValidInput(user, _simpleObjectCache, true);
             if (errorList.Count != 0)
             {
