@@ -1,4 +1,6 @@
 using System;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace CMS.challenge.data.Entities
 {
@@ -37,5 +39,10 @@ namespace CMS.challenge.data.Entities
         }
 
         public int Age { get; set; }
+
+        public static implicit operator Task<object>(User v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

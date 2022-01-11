@@ -14,8 +14,8 @@ namespace CMS.challenge.common
         {
             if (id == null) return false;
 
-            var existingRecord = SimpleObjectCache.GetAllAsync();
-            foreach (User user in existingRecord.Result)
+            var userRecords = SimpleObjectCache.GetAllAsync();
+            foreach (User user in userRecords.Result)
             {
                 if (user.Id == id) continue;
                 if (user.Email == emailAddress) return true;
@@ -73,7 +73,6 @@ namespace CMS.challenge.common
             {
                 return false;
             }
-            //return true;
         }
         public static bool Is18OrOlder(DateTime dateOfBirth)
         {
@@ -114,6 +113,7 @@ namespace CMS.challenge.common
                 errorArray.Add(userExistsError);
             }
 
+            //var userRecords = _simpleObjectCache.GetAllAsync();
             if (ValidationClass.EmailExists(user.Email, _simpleObjectCache, user.Id))
             {
                 Error emailExistsError = new Error();
